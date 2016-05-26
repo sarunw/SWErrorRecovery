@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SWErrorRecovery_Example' do
+  pod 'SWErrorRecovery', :path => '../'
+
+  target 'SWErrorRecovery_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
