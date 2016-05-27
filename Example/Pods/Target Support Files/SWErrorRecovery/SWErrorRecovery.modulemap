@@ -1,6 +1,0 @@
-framework module SWErrorRecovery {
-  umbrella header "SWErrorRecovery-umbrella.h"
-
-  export *
-  module * { export * }
-}
