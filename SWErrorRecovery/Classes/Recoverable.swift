@@ -56,6 +56,11 @@ public extension UIAlertController {
                 let ok = UIAlertAction(title: okTitle, style: .Default, handler: nil)
                 self.addAction(ok)
             }
+        } else {
+            // OK action for no recovery options
+            let okTitle = NSLocalizedString("com.sarunw.error-recovery.ok", value: "OK", comment: "Alert ok action")
+            let ok = UIAlertAction(title: okTitle, style: .Default, handler: nil)
+            self.addAction(ok)
         }
     }
     
