@@ -36,11 +36,11 @@ public extension UIAlertController {
         
         self.init(title: error.localizedDescription, message: message, preferredStyle: .Alert)
         
-        if let recoveryAttempeter = error.recoveryAttempter as? ErrorRecoveryAttempter {
+        if let recoveryAttempter = error.recoveryAttempter as? ErrorRecoveryAttempter {
             if let localizedRecoveryOptions = error.localizedRecoveryOptions {
                 for (index, localizedRecoveryOption) in localizedRecoveryOptions.enumerate() {
                     let action = UIAlertAction(title: localizedRecoveryOption, style: .Default, handler: { (action) in
-                        recoveryAttempeter.attemptRecoveryFromError(error, optionIndex: index)
+                        recoveryAttempter.attemptRecoveryFromError(error, optionIndex: index)
                     })
                     
                     self.addAction(action)
