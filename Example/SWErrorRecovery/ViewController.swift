@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         
         let error = NSError(domain: "error.domain", code: 0, userInfo: info)        
         let alert = UIAlertController(error: error)
+        alert.addCancelAction()
         
         self.presentViewController(alert, animated: true) {
             

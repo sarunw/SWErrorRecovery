@@ -32,8 +32,7 @@ public class ErrorRecoveryAttempter: NSObject {
     public func addRecoveryOption(localizedTitle title: String, recoveryBlock block: RecoveryBlock) {
         self.titles.append(title)
         self.blocks.append(block)
-    }
-    
+    }    
     
     // MARK: - NSErrorRecoveryAttempting
     public override func attemptRecoveryFromError(error: NSError, optionIndex recoveryOptionIndex: Int) -> Bool {
