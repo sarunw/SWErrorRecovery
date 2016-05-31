@@ -22,7 +22,9 @@ class ViewController: UIViewController {
             print("Recovered")
             UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
             return true
-        }        
+        }
+        
+        recoveryAttempter.addCancelOption(localizedTitle: "Later", recoveryBlock: nil)
         
         let info = [NSLocalizedDescriptionKey: "Motion & Fitness disabled",
                     NSLocalizedFailureReasonErrorKey: "You don't grant Motion & Fitness permission.",
@@ -32,7 +34,6 @@ class ViewController: UIViewController {
         
         let error = NSError(domain: "error.domain", code: 0, userInfo: info)        
         let alert = UIAlertController(error: error)
-        alert.addCancelAction()
         
         self.presentViewController(alert, animated: true) {
             

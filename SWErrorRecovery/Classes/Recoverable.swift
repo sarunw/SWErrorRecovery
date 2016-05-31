@@ -45,6 +45,14 @@ public extension UIAlertController {
                     
                     self.addAction(action)
                 }
+                
+                if let cancel = recoveryAttempter.cancelOption {
+                    let action = UIAlertAction(title: cancel, style: .Cancel, handler: { (action) in
+                        recoveryAttempter.cancelRecoveryFromError(error)
+                    })
+                    
+                    self.addAction(action)
+                }
             } else {
                 // OK action for no recovery options
                 let okTitle = NSLocalizedString("com.sarunw.error-recovery.ok", value: "OK", comment: "Alert ok action")
@@ -57,13 +65,6 @@ public extension UIAlertController {
             let ok = UIAlertAction(title: okTitle, style: .Default, handler: nil)
             self.addAction(ok)
         }
-    }
-    
-    /// Convenience method to add cancel action
-    public func addCancelAction() {
-        let cancelTitle = NSLocalizedString("com.sarunw.error-recovery.cancel", value: "Cancel", comment: "Alert cancel action")
-        let cancel = UIAlertAction(title: cancelTitle, style: .Cancel, handler: nil)
-        self.addAction(cancel)
     }
     
 //    class public func alertController(fromError error: NSError) -> UIAlertController {
