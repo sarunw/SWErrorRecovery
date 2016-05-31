@@ -48,7 +48,7 @@ public class ErrorRecoveryAttempter: NSObject {
      - Parameter localizedTitle: localized string for use as `NSLocalizedRecoveryOptionsErrorKey`, default to Cancel.
      - Parameter recoveryBlock: block that would be execute when user select this recovery option.
      */
-    public func addCancelOption(localizedTitle title: String = NSLocalizedString("com.sarunw.error-recovery.cancel", value: "Cancel", comment: "Alert cancel action"), recoveryBlock block: CancelBlock? = nil) {
+    public func addCancelOption(localizedTitle title: String? = NSLocalizedString("com.sarunw.error-recovery.cancel", value: "Cancel", comment: "Alert cancel action"), recoveryBlock block: CancelBlock? = nil) {
         self.cancelTitle = title
         self.cancelBlock = block
     }
