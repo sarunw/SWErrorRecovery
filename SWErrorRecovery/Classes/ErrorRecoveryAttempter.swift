@@ -60,6 +60,7 @@ public class ErrorRecoveryAttempter: NSObject {
     
     // MARK: - NSErrorRecoveryAttempting
     public func cancelRecoveryFromError(error: NSError) -> Bool {
+        self.cancelBlock?()
         return false
     }
 
