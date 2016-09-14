@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SWErrorRecovery'
-  s.version          = '1.1.2'
+  s.version          = '2.0.0'
   s.summary          = 'SWErrorRecovery contains class and extension that facilitate crafting error and showing it.'
 
 # This description is used to generate tags and improve search results.

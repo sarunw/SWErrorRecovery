@@ -9,25 +9,25 @@
 import Foundation
 
 /// Implementaion of `NSErrorRecoveryAttempting` informal protocol
-public class ErrorRecoveryAttempter: NSObject {
+open class ErrorRecoveryAttempter: NSObject {
     /**
     A block object to be executed when recover from error. This block taking no argument and return a Boolean that indicates whether or not the recovery was successful.
     */
     public typealias RecoveryBlock = () -> (Bool)
     public typealias CancelBlock = () -> ()
     
-    private var titles = [String]()
-    private var blocks = [RecoveryBlock]()
+    fileprivate var titles = [String]()
+    fileprivate var blocks = [RecoveryBlock]()
     
-    private var cancelTitle: String?
-    private var cancelBlock: CancelBlock?
+    fileprivate var cancelTitle: String?
+    fileprivate var cancelBlock: CancelBlock?
     
     /// Extract the recovery options for use as `NSLocalizedRecoveryOptionsErrorKey`.
-    public var recoveryOptions: [String] {
+    open var recoveryOptions: [String] {
         return self.titles
     }
     
-    public var cancelOption: String? {
+    open var cancelOption: String? {
         return self.cancelTitle
     }
     
@@ -37,7 +37,7 @@ public class ErrorRecoveryAttempter: NSObject {
     - Parameter localizedTitle: localized string for use as `NSLocalizedRecoveryOptionsErrorKey`.
     - Parameter recoveryBlock: block that would be execute when user select this recovery option.
     */
-    public func addRecoveryOption(localizedTitle title: String, recoveryBlock block: RecoveryBlock) {
+    open func addRecoveryOption(localizedTitle title: String, recoveryBlock block: @escaping RecoveryBlock) {
         self.titles.append(title)
         self.blocks.append(block)
     }
@@ -48,18 +48,18 @@ public class ErrorRecoveryAttempter: NSObject {
      - Parameter localizedTitle: localized string for use as `NSLocalizedRecoveryOptionsErrorKey`, default to Cancel.
      - Parameter recoveryBlock: block that would be execute when user select this recovery option.
      */
-    public func addCancelOption(localizedTitle title: String? = NSLocalizedString("com.sarunw.error-recovery.cancel", value: "Cancel", comment: "Alert cancel action"), recoveryBlock block: CancelBlock? = nil) {
+    open func addCancelOption(localizedTitle title: String? = NSLocalizedString("com.sarunw.error-recovery.cancel", value: "Cancel", comment: "Alert cancel action"), recoveryBlock block: CancelBlock? = nil) {
         self.cancelTitle = title
         self.cancelBlock = block
     }
     
     // MARK: - NSErrorRecoveryAttempting
-    public override func attemptRecoveryFromError(error: NSError, optionIndex recoveryOptionIndex: Int) -> Bool {
+    open override func attemptRecovery(fromError error: Error, optionIndex recoveryOptionIndex: Int) -> Bool {
         return self.recover(optionIndex: recoveryOptionIndex)
     }
     
     // MARK: - NSErrorRecoveryAttempting
-    public func cancelRecoveryFromError(error: NSError) -> Bool {
+    open func cancelRecoveryFromError(_ error: NSError) -> Bool {
         self.cancelBlock?()
         return false
     }
@@ -70,13 +70,13 @@ public class ErrorRecoveryAttempter: NSObject {
      `(void)didPresentErrorWithRecovery:(BOOL)didRecover contextInfo:(void *)contextInfo;`
      The value passed for didRecover must be YES if error recovery was completely successful, NO otherwise.
     */
-    public override func attemptRecoveryFromError(error: NSError, optionIndex recoveryOptionIndex: Int, delegate: AnyObject?, didRecoverSelector: Selector, contextInfo: UnsafeMutablePointer<Void>) {
-        
-        let didRecover = self.recover(optionIndex: recoveryOptionIndex)
-        let context = UnsafeMutablePointer<AnyObject>(contextInfo)
-        
-        delegate?.performSelector(didRecoverSelector, withObject: didRecover, withObject: context.memory)
-    }
+//    open override func attemptRecovery(fromError error: Error, optionIndex recoveryOptionIndex: Int, delegate: Any?, didRecoverSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
+//        
+//        let didRecover = self.recover(optionIndex: recoveryOptionIndex)
+//        let context = UnsafeMutablePointer<AnyObject>(contextInfo!)
+//        
+//        delegate?.perform(didRecoverSelector, with: didRecover, with: context.pointee)
+//    }
     
     // MARK: - Private
     /**
@@ -86,7 +86,7 @@ public class ErrorRecoveryAttempter: NSObject {
     
     - Returns: YES if error recovery was completely successful, NO otherwise.
     */
-    private func recover(optionIndex recoveryOptionIndex: Int) -> Bool {
+    fileprivate func recover(optionIndex recoveryOptionIndex: Int) -> Bool {
         return self.blocks[recoveryOptionIndex]()
     }
 }

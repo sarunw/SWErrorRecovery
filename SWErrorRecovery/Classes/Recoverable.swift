@@ -32,22 +32,22 @@ public extension UIAlertController {
             messages.append(localizedRecoverySuggestion)
         }
         
-        let message = messages.joinWithSeparator(" ")
+        let message = messages.joined(separator: " ")
         
-        self.init(title: error.localizedDescription, message: message, preferredStyle: .Alert)
+        self.init(title: error.localizedDescription, message: message, preferredStyle: .alert)
         
         if let recoveryAttempter = error.recoveryAttempter as? ErrorRecoveryAttempter {
             if let localizedRecoveryOptions = error.localizedRecoveryOptions {
-                for (index, localizedRecoveryOption) in localizedRecoveryOptions.enumerate() {
-                    let action = UIAlertAction(title: localizedRecoveryOption, style: .Default, handler: { (action) in
-                        recoveryAttempter.attemptRecoveryFromError(error, optionIndex: index)
+                for (index, localizedRecoveryOption) in localizedRecoveryOptions.enumerated() {
+                    let action = UIAlertAction(title: localizedRecoveryOption, style: .default, handler: { (action) in
+                        recoveryAttempter.attemptRecovery(fromError: error, optionIndex: index)
                     })
                     
                     self.addAction(action)
                 }
                 
                 if let cancel = recoveryAttempter.cancelOption {
-                    let action = UIAlertAction(title: cancel, style: .Cancel, handler: { (action) in
+                    let action = UIAlertAction(title: cancel, style: .cancel, handler: { (action) in
                         recoveryAttempter.cancelRecoveryFromError(error)
                     })
                     
@@ -56,13 +56,13 @@ public extension UIAlertController {
             } else {
                 // OK action for no recovery options
                 let okTitle = NSLocalizedString("com.sarunw.error-recovery.ok", value: "OK", comment: "Alert ok action")
-                let ok = UIAlertAction(title: okTitle, style: .Default, handler: nil)
+                let ok = UIAlertAction(title: okTitle, style: .default, handler: nil)
                 self.addAction(ok)
             }
         } else {
             // OK action for no recovery options
             let okTitle = NSLocalizedString("com.sarunw.error-recovery.ok", value: "OK", comment: "Alert ok action")
-            let ok = UIAlertAction(title: okTitle, style: .Default, handler: nil)
+            let ok = UIAlertAction(title: okTitle, style: .default, handler: nil)
             self.addAction(ok)
         }
     }
